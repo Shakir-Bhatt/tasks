@@ -91,14 +91,27 @@
             let dateTimes = $('.date-time');
             if (dateTimes.length > 0) {
                 $('.date-time').each(function(i, obj) {
-                    let localDateTime = convertUTCDateToLocalDate(new Date($(obj).text()));
+                    console.log($(obj).text());
+                    let localDateTime = new Date($(obj).text() + ' UTC');
+                    // convertUTCDateToLocalDate(new Date($(obj).text()+' UTC'));
+                    localDateTime = localDateTime.toLocaleString([], {
+                        hour12: true
+                    });
                     $(obj).text(localDateTime);
                 });
             }
 
+
         })
 
         function convertUTCDateToLocalDate(date) {
+            console.log(date);
+            date = date.toUTCString();
+            return date.toString();
+            console.log(date.getTimezoneOffset());
+            console.log(date);
+            console.log(date.getTime());
+
             var newDate = new Date(date.getTime() - date.getTimezoneOffset() * 60 * 1000);
             return newDate.toLocaleString();
         }
